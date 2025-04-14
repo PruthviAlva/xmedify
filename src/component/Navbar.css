@@ -1,0 +1,78 @@
+.navbar {
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: white;
+}
+
+.nav-link {
+  color: black;
+  text-decoration: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  margin: 0 10px;
+  border-radius: 5px;
+}
+
+.active {
+  color: #007bff;
+  border-bottom: 1px solid #007bff;
+  font-weight: bold;
+}
+
+.logoComponent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.logo {
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoComponent p {
+  display: flex;
+  font-size: 1.2rem;
+  color: #007bff;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar ul li {
+  display: inline;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.my-bookings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: #007bff;
+  text-align: center;
+}
+
+.my-bookings a {
+  text-decoration: none;
+  color: white;
+}

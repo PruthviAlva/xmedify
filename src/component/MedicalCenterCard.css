@@ -1,0 +1,57 @@
+.medical-center-card {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  border: "1px solid #ccc";
+  padding: "1rem";
+  width: 43rem;
+  height: 8rem;
+  margin-bottom: "1rem";
+  border-radius: "8px";
+  margin: 2.5rem;
+}
+
+.parent_div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 8rem;
+  width: 8rem;
+  border-radius: 60px;
+  background-color: rgba(140, 207, 255, 1);
+}
+
+.hospital_image {
+  align-items: center;
+  margin-left: 1rem;
+  width: 5rem;
+  height: 5rem;
+}
+
+.child_div {
+  position: relative;
+  top: 2rem;
+  left: 0.5rem;
+  background-color: rgba(42, 167, 255, 1);
+  color: white;
+  border-radius: 10px;
+  height: 1rem;
+}
+
+.medical-details {
+  margin-left: 10rem;
+  width: 25rem;
+}
+
+.medical-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+button {
+  width: 12rem;
+  height: 3rem;
+}

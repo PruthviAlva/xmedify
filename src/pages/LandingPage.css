@@ -1,0 +1,10 @@
+.landing-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.searchbar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
