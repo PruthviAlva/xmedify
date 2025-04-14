@@ -35,10 +35,6 @@ const SearchResults = () => {
         }
     }, [state, city]);
 
-    const handleBooking = (center) => {
-        alert("Appointment booked successfully!");
-    };
-
     return (
         <>
             <div className="search-results">
@@ -50,14 +46,13 @@ const SearchResults = () => {
                     ) : (
                         <>
                             <div>
-                                <h1>{medicalCenters.length} medical centers available in {state}</h1>
+                                <h1>{medicalCenters.length} medical centers available in {city.toLowerCase()}</h1>
                                 <p><CiCircleCheck /> Book appointments with minimum wait-time & verified doctor details</p>
                             </div>
                             {medicalCenters.map((center, idx) => (
                                 <MedicalCenterCard
                                     key={idx}
                                     center={center}
-                                    onBook={() => handleBooking(center)}
                                 />
                             ))}
                         </>

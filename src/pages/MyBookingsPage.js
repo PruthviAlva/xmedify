@@ -1,5 +1,5 @@
 // src/pages/MyBookingsPage.js
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import MyBookingCard from '../component/MyBookingCard';
 import View1Image1 from '../image/View1-image1.png';
@@ -7,12 +7,7 @@ import View1Image2 from '../image/View1-image2.png';
 import footer from '../image/footer.png';
 
 const MyBookingsPage = () => {
-    const [bookings, setBookings] = useState([]);
-
-    useEffect(() => {
-        const storedBookings = JSON.parse(localStorage.getItem("bookings")) || [];
-        setBookings(storedBookings);
-    }, []);
+    const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
 
     return (
         <div className="mybookingPage">
