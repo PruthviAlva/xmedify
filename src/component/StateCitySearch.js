@@ -36,8 +36,6 @@ const StateCitySearch = ({ setMedicalCenters }) => {
                 .then((data) => setMedicalCenters(data))
                 .catch((err) => console.error("Failed to fetch cities:", err));
         }
-        setSelectedState("");
-        setSelectedCity("")
     };
 
     return (

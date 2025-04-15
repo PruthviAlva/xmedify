@@ -66,8 +66,10 @@ const MedicalCenterCard = ({ center }) => {
       <div>
         {showBooking && (
           <div className="booking-dropdown">
+            <p>Today</p>
+
             <label>Select Date:</label>
-            <select onChange={(e) => setSelectedDate(e.target.value)}>
+            <select onChange={(e) => setSelectedDate(e.target.value)} value={selectedDate}>
               <option value="">-- Choose a Date --</option>
               {getNext7Days().map(date => (
                 <option key={date} value={date}>{date}</option>
@@ -75,16 +77,23 @@ const MedicalCenterCard = ({ center }) => {
             </select>
 
             {Object.entries(timeSlots).map(([period, times]) => (
-              <div key={period}>
+              <div key={period} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 <p>{period}</p>
-                {times.map(time => (
-                  <button
-                    key={time}
-                    onClick={() => setSelectedTime(time)}
-                    style={{ color: 'black', backgroundColor: selectedTime === time ? 'lightblue' : 'white' }}>
-                    {time}
-                  </button>
-                ))}
+                <div className="timeSlotGroup">
+                  {times.map(time => (
+                    <button
+                      key={time}
+                      onClick={() => setSelectedTime(time)}
+                      style={{
+                        color: 'black',
+                        backgroundColor: selectedTime === time ? 'lightblue' : 'white',
+                        margin: '4px'
+                      }}
+                    >
+                      {time}
+                    </button>
+                  ))}
+                </div>
               </div>
             ))}
             <button onClick={handleBooking}>Confirm Booking</button>
