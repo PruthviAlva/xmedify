@@ -60,15 +60,19 @@ const MedicalCenterCard = ({ center }) => {
         </div>
         <div className="medical-button">
           <p style={{ color: "rgba(1, 164, 0, 1)" }}>Available Today</p>
-          <button data-testid="book-button" onClick={() => setShowBooking(!showBooking)}>Book FREE Center Visit</button>
+          <button
+            data-testid="book-visit-button"
+            onClick={() => setShowBooking(!showBooking)}
+          >
+            Book FREE Center Visit
+          </button>
         </div>
       </div>
       {showBooking && (
-        <div className="booking-dropdown">
-          {/* ✅ Required <p> for Cypress test */}
+        <div className="booking-dropdown" data-testid="booking-section">
           <p>Today</p>
 
-          <label htmlFor="date-select">Select Date:</label>
+          <label>Select Date:</label>
           <select
             id="date-select"
             value={selectedDate}
@@ -80,9 +84,8 @@ const MedicalCenterCard = ({ center }) => {
             ))}
           </select>
 
-          {/* ✅ Add required <p> tags for Morning, Afternoon, Evening */}
           {Object.entries(timeSlots).map(([period, times]) => (
-            <div key={period} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div key={period} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <p>{period}</p>
               {times.map(time => (
                 <button
@@ -100,7 +103,7 @@ const MedicalCenterCard = ({ center }) => {
             </div>
           ))}
 
-          <button onClick={handleBooking}>Confirm Booking</button>
+          <button data-testid="confirm-booking-button" onClick={handleBooking}>Confirm Booking</button>
         </div>
       )}
     </>
