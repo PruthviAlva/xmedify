@@ -14,10 +14,11 @@ const MyBookingCard = ({ center }) => {
                 </div>
             </div>
             <div className="medical-details">
-                <h3 style={{ color: "rgba(20, 190, 240, 1)" }}>{center.hospitalName}</h3>
-                <p>{center.address}, {center.city}, {center.state} {center.zipCode}</p>
-                <p><strong>Date:</strong> {center.date}</p>
-                <p><strong>Time:</strong> {center.time}</p>
+                <h3 style={{ color: "rgba(20, 190, 240, 1)" }}>{center["Hospital Name"]}</h3>
+                <p>{center.Address}, {center.City}, {center.State} {center["ZIP Code"]}</p>
+                <p><strong>Rating:</strong> {center["Hospital overall rating"]}</p>
+                <p><strong>Date:</strong> {center.bookingDate}</p>
+                <p><strong>Time:</strong> {center.bookingTime}</p>
             </div>
         </div>
     );
