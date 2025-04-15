@@ -62,7 +62,7 @@ const StateCitySearch = ({ medicalCenters, setMedicalCenters }) => {
                     </select>
                 </div>
 
-                <button type="submit"><IoSearchSharp /> Search</button>
+                <button type="submit">Search</button>
             </form>
             {medicalCenters.length !== 0 ? (
                 <div>
