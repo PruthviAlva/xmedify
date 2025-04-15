@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { IoSearchSharp } from "react-icons/io5";
+import { CiCircleCheck } from "react-icons/ci";
 
 import './StateCitySearch.css';
 
-const StateCitySearch = ({ setMedicalCenters }) => {
+const StateCitySearch = ({ medicalCenters, setMedicalCenters }) => {
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
     const [selectedState, setSelectedState] = useState("");
@@ -63,6 +64,14 @@ const StateCitySearch = ({ setMedicalCenters }) => {
 
                 <button type="submit"><IoSearchSharp /> Search</button>
             </form>
+            {medicalCenters.length !== 0 ? (
+                <div>
+                    <h1>{medicalCenters.length} medical centers available in {selectedCity.toLowerCase()}</h1>
+                    <p><CiCircleCheck /> Book appointments with minimum wait-time & verified doctor details</p>
+                </div>
+            ) : (
+                <div></div>
+            )}
         </div>
     );
 };
