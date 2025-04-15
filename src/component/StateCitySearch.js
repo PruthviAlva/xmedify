@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { IoSearchSharp } from "react-icons/io5";
 
 import './StateCitySearch.css';
 
-const StateCitySearch = () => {
+const StateCitySearch = ({ setMedicalCenters }) => {
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
     const [selectedState, setSelectedState] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
-    const navigate = useNavigate();
 
     // Fetch states on mount
     useEffect(() => {
@@ -33,7 +31,10 @@ const StateCitySearch = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (selectedState && selectedCity) {
-            navigate(`/search?state=${selectedState}&city=${selectedCity}`);
+            fetch(`https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`)
+                .then((res) => res.json())
+                .then((data) => setMedicalCenters(data))
+                .catch((err) => console.error("Failed to fetch cities:", err));
         }
         setSelectedState("");
         setSelectedCity("")
