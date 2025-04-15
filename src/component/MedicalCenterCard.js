@@ -60,46 +60,49 @@ const MedicalCenterCard = ({ center }) => {
         </div>
         <div className="medical-button">
           <p style={{ color: "rgba(1, 164, 0, 1)" }}>Available Today</p>
-          <button onClick={() => setShowBooking(!showBooking)}>Book FREE Center Visit</button>
+          <button data-testid="book-button" onClick={() => setShowBooking(!showBooking)}>Book FREE Center Visit</button>
         </div>
       </div>
-      <div>
-        {showBooking && (
-          <div className="booking-dropdown">
-            <p>Today</p>
+      {showBooking && (
+        <div className="booking-dropdown">
+          {/* ✅ Required <p> for Cypress test */}
+          <p>Today</p>
 
-            <label>Select Date:</label>
-            <select onChange={(e) => setSelectedDate(e.target.value)} value={selectedDate}>
-              <option value="">-- Choose a Date --</option>
-              {getNext7Days().map(date => (
-                <option key={date} value={date}>{date}</option>
-              ))}
-            </select>
-
-            {Object.entries(timeSlots).map(([period, times]) => (
-              <div key={period} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <p>{period}</p>
-                <div className="timeSlotGroup">
-                  {times.map(time => (
-                    <button
-                      key={time}
-                      onClick={() => setSelectedTime(time)}
-                      style={{
-                        color: 'black',
-                        backgroundColor: selectedTime === time ? 'lightblue' : 'white',
-                        margin: '4px'
-                      }}
-                    >
-                      {time}
-                    </button>
-                  ))}
-                </div>
-              </div>
+          <label htmlFor="date-select">Select Date:</label>
+          <select
+            id="date-select"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          >
+            <option value="">-- Choose a Date --</option>
+            {getNext7Days().map(date => (
+              <option key={date} value={date}>{date}</option>
             ))}
-            <button onClick={handleBooking}>Confirm Booking</button>
-          </div>
-        )}
-      </div>
+          </select>
+
+          {/* ✅ Add required <p> tags for Morning, Afternoon, Evening */}
+          {Object.entries(timeSlots).map(([period, times]) => (
+            <div key={period} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <p>{period}</p>
+              {times.map(time => (
+                <button
+                  key={time}
+                  onClick={() => setSelectedTime(time)}
+                  style={{
+                    color: 'black',
+                    backgroundColor: selectedTime === time ? 'lightblue' : 'white',
+                    margin: '4px'
+                  }}
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
+          ))}
+
+          <button onClick={handleBooking}>Confirm Booking</button>
+        </div>
+      )}
     </>
   );
 };
