@@ -54,25 +54,25 @@ const StateCitySearch = ({ medicalCenters, setMedicalCenters }) => {
             <form onSubmit={handleSubmit} className="search-container">
                 <div id="state">
                     <label><MdOutlineLocationOn /> State:</label>
-                    <select value={selectedState} onChange={(e) => setSelectedState(e.target.value)} required>
-                        <option value="">Select State</option>
+                    <ol value={selectedState} onChange={(e) => setSelectedState(e.target.value)} required>
+                        <li value="">Select State</li>
                         {states.map((state) => (
-                            <option key={state} value={state}>{state}</option>
+                            <li key={state} value={state}>{state}</li>
                         ))}
-                    </select>
+                    </ol>
                 </div>
 
                 <div id="city">
                     <label><MdOutlineLocationOn /> City:</label>
-                    <select value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)} required>
-                        <option value="">Select City</option>
+                    <ol value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)} required>
+                        <li value="">Select City</li>
                         {cities.map((city) => (
-                            <option key={city} value={city}>{city}</option>
+                            <li key={city} value={city}>{city}</li>
                         ))}
-                    </select>
+                    </ol>
                 </div>
 
-                <button type="submit"><IoSearchSharp /> Search</button>
+                <button type="submit"><IoSearchSharp />Search</button>
             </form>
             {medicalCenters.length !== 0 ? (
                 <div>
