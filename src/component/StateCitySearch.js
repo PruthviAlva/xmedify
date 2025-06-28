@@ -54,22 +54,52 @@ const StateCitySearch = ({ medicalCenters, setMedicalCenters }) => {
             <form onSubmit={handleSubmit} className="search-container">
                 <div id="state">
                     <label><MdOutlineLocationOn /> State:</label>
-                    <ol value={selectedState} onChange={(e) => setSelectedState(e.target.value)} required>
-                        <li value="">Select State</li>
-                        {states.map((state) => (
-                            <li key={state} value={state}>{state}</li>
-                        ))}
-                    </ol>
+                    <div className="custom-dropdown">
+                        <ol className="dropdown-list">
+                            <li
+                                value=""
+                                onClick={() => setSelectedState("")}
+                                className={selectedState === "" ? "active" : ""}
+                            >
+                                Select State
+                            </li>
+                            {states.map((state) => (
+                                <li
+                                    key={state}
+                                    value={state}
+                                    onClick={() => setSelectedState(state)}
+                                    className={selectedState === state ? "active" : ""}
+                                >
+                                    {state}
+                                </li>
+                            ))}
+                        </ol>
+                    </div>
                 </div>
 
                 <div id="city">
                     <label><MdOutlineLocationOn /> City:</label>
-                    <ol value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)} required>
-                        <li value="">Select City</li>
-                        {cities.map((city) => (
-                            <li key={city} value={city}>{city}</li>
-                        ))}
-                    </ol>
+                    <div className="custom-dropdown">
+                        <ol className="dropdown-list">
+                            <li
+                                value=""
+                                onClick={() => setSelectedCity("")}
+                                className={selectedCity === "" ? "active" : ""}
+                            >
+                                Select City
+                            </li>
+                            {cities.map((city) => (
+                                <li
+                                    key={city}
+                                    value={city}
+                                    onClick={() => setSelectedCity(city)}
+                                    className={selectedCity === city ? "active" : ""}
+                                >
+                                    {city}
+                                </li>
+                            ))}
+                        </ol>
+                    </div>
                 </div>
 
                 <button type="submit"><IoSearchSharp />Search</button>
