@@ -13,30 +13,40 @@ const StateCitySearch = ({ medicalCenters, setMedicalCenters }) => {
 
     // Fetch states on mount
     useEffect(() => {
-        fetch("https://meddata-backend.onrender.com/states")
-            .then((res) => res.json())
-            .then((data) => setStates(data))
-            .catch((err) => console.error("Failed to fetch states:", err));
+        const getStates = async () => {
+            await fetch("https://meddata-backend.onrender.com/states")
+                .then((res) => res.json())
+                .then((data) => setStates(data))
+                .catch((err) => console.error("Failed to fetch states:", err));
+        }
+        getStates();
     }, []);
 
     // Fetch cities when state changes
     useEffect(() => {
-        if (selectedState) {
-            fetch(`https://meddata-backend.onrender.com/cities/${selectedState}`)
-                .then((res) => res.json())
-                .then((data) => setCities(data))
-                .catch((err) => console.error("Failed to fetch cities:", err));
+        const getCities = async () => {
+            if (selectedState) {
+                fetch(`https://meddata-backend.onrender.com/cities/${selectedState}`)
+                    .then((res) => res.json())
+                    .then((data) => setCities(data))
+                    .catch((err) => console.error("Failed to fetch cities:", err));
+            }
         }
+        getCities();
     }, [selectedState]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const getMedicalCenters = async () => {
         if (selectedState && selectedCity) {
-            fetch(`https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`)
+            await fetch(`https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`)
                 .then((res) => res.json())
                 .then((data) => setMedicalCenters(data))
                 .catch((err) => console.error("Failed to fetch cities:", err));
         }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        getMedicalCenters();
     };
 
     return (
