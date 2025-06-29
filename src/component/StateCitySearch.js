@@ -82,7 +82,7 @@ const StateCitySearch = ({ medicalCenters, setMedicalCenters }) => {
   return (
     <div>
       <form onSubmit={handleSubmit} className="search-container">
-        <div id="state" ref={stateRef}>
+        <div id="state" ref={stateRef} className="state">
           <label>
             <MdOutlineLocationOn /> State:
           </label>
@@ -111,7 +111,7 @@ const StateCitySearch = ({ medicalCenters, setMedicalCenters }) => {
           )}
         </div>
 
-        <div id="city" ref={cityRef}>
+        <div id="city" ref={cityRef} className="city">
           <label>
             <MdOutlineLocationOn /> City:
           </label>
