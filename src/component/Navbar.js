@@ -13,17 +13,14 @@ const Navbar = () => {
                 </div>
                 <p>Medify</p>
             </div>
-            <ul>
-                <li><NavLink to="/" className="nav-link" activeclassname="active">Find Doctors</NavLink ></li>
-                <li><NavLink to="/" className="nav-link" activeclassname="active">Hospitals</NavLink ></li>
-                <li><NavLink to="/" className="nav-link" activeclassname="active">Medicines</NavLink ></li>
-                <li><NavLink to="/" className="nav-link" activeclassname="active">Surgeries</NavLink ></li>
-                <li><NavLink to="/" className="nav-link" activeclassname="active">Software for Provider</NavLink ></li>
-                <li><NavLink to="/" className="nav-link" activeclassname="active">Facilities</NavLink ></li>
+            <ul className="nav-list">
+                {["Find Doctors", "Hospitals", "Medicines", "Surgeries", "Software for Provider", "Facilities"].map((text) => (
+                    <li key={text}>
+                        <NavLink to={text === "Hospitals" ? "/" : "#"} className="nav-link" activeclassname={text === "Hospitals" ? "active" : ""}>{text}</NavLink>
+                    </li>
+                ))}
+                <li><NavLink to="/my-bookings" className="nav-link">My Bookings</NavLink></li>
             </ul>
-            <p className="my-bookings">
-                <NavLink to="/my-bookings" className="nav-link">My Bookings</NavLink>
-            </p>
         </nav>
     );
 };

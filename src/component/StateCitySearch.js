@@ -1,166 +1,101 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { IoSearchSharp } from "react-icons/io5";
-import { CiCircleCheck } from "react-icons/ci";
 
 import "./StateCitySearch.css";
 
-const StateCitySearch = ({ medicalCenters, setMedicalCenters }) => {
-  const [states, setStates] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
-  const [showStateDropdown, setShowStateDropdown] = useState(false);
-  const [showCityDropdown, setShowCityDropdown] = useState(false);
+const StateCitySearch = () => {
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+    const [selectedState, setSelectedState] = useState("");
+    const [selectedCity, setSelectedCity] = useState("");
+    const [showState, toggleShowState] = useState(false);
+    const [showCity, toggleShowCity] = useState(false);
+    const stateRef = useRef();
+    const cityRef = useRef();
+    const navigate = useNavigate();
 
-  const stateRef = useRef();
-  const cityRef = useRef();
+    useEffect(() => {
+        fetch("https://meddata-backend.onrender.com/states")
+            .then((r) => r.json())
+            .then(setStates);
+    }, []);
 
-  useEffect(() => {
-    const getStates = async () => {
-      try {
-        const res = await fetch("https://meddata-backend.onrender.com/states");
-        const data = await res.json();
-        setStates(data);
-      } catch (err) {
-        console.error("Failed to fetch states:", err);
-      }
-    };
-    getStates();
-  }, []);
-
-  useEffect(() => {
-    const getCities = async () => {
-      if (selectedState) {
-        try {
-          const res = await fetch(
-            `https://meddata-backend.onrender.com/cities/${selectedState}`
-          );
-          const data = await res.json();
-          setCities(data);
-        } catch (err) {
-          console.error("Failed to fetch cities:", err);
+    useEffect(() => {
+        if (selectedState) {
+            fetch(`https://meddata-backend.onrender.com/cities/${selectedState}`)
+                .then((r) => r.json())
+                .then(setCities);
         }
-      }
-    };
-    getCities();
-  }, [selectedState]);
+    }, [selectedState]);
 
-  const getMedicalCenters = async () => {
-    if (selectedState && selectedCity) {
-      try {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         const res = await fetch(
-          `https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`
+            `https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`
         );
         const data = await res.json();
-        setMedicalCenters(data);
-      } catch (err) {
-        console.error("Failed to fetch cities:", err);
-      }
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    getMedicalCenters();
-  };
-
-  // Close dropdowns on outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (stateRef.current && !stateRef.current.contains(e.target)) {
-        setShowStateDropdown(false);
-      }
-      if (cityRef.current && !cityRef.current.contains(e.target)) {
-        setShowCityDropdown(false);
-      }
+        localStorage.setItem("results", JSON.stringify(data));
+        navigate(`/results?state=${selectedState}&city=${selectedCity}`);
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} className="search-container">
-        <div id="state" ref={stateRef} className="state">
-          <label>
-            <MdOutlineLocationOn /> State:
-          </label>
-          <div
-            className="custom-select"
-            onClick={() => setShowStateDropdown(!showStateDropdown)}
-          >
-            {selectedState || "Select State"}
-          </div>
-          {showStateDropdown && (
-            <ol className="dropdown-list">
-              {states.map((state) => (
-                <li
-                  key={state}
-                  value={state}
-                  onClick={() => {
-                    setSelectedState(state);
-                    setShowStateDropdown(false);
-                    setSelectedCity(""); // Reset city
-                  }}
+    useEffect(() => {
+        const listener = (e) => {
+            if (stateRef.current && !stateRef.current.contains(e.target))
+                toggleShowState(false);
+            if (cityRef.current && !cityRef.current.contains(e.target))
+                toggleShowCity(false);
+        };
+        document.addEventListener("mousedown", listener);
+        return () => document.removeEventListener("mousedown", listener);
+    }, []);
+
+    return (
+        <form className="search-form" onSubmit={handleSubmit}>
+            <div id="state" ref={stateRef} className="dropdown-wrapper">
+                <label><MdOutlineLocationOn />State</label>
+                <div
+                    className="dropdown-control"
+                    onClick={() => toggleShowState(!showState)}
                 >
-                  {state}
-                </li>
-              ))}
-            </ol>
-          )}
-        </div>
+                    {selectedState || "Select State"}
+                </div>
+                {showState && (
+                    <ul className="dropdown-list">
+                        {states.map((s) => (
+                            <li key={s} onClick={() => { setSelectedState(s); toggleShowState(false); }}>
+                                {s}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
 
-        <div id="city" ref={cityRef} className="city">
-          <label>
-            <MdOutlineLocationOn /> City:
-          </label>
-          <div
-            className="custom-select"
-            onClick={() => setShowCityDropdown(!showCityDropdown)}
-          >
-            {selectedCity || "Select City"}
-          </div>
-          {showCityDropdown && (
-            <ol className="dropdown-list">
-              {cities.map((city) => (
-                <li
-                  key={city}
-                  value={city}
-                  onClick={() => {
-                    setSelectedCity(city);
-                    setShowCityDropdown(false);
-                  }}
+            <div id="city" ref={cityRef} className="dropdown-wrapper">
+                <label><MdOutlineLocationOn />City</label>
+                <div
+                    className="dropdown-control"
+                    onClick={() => toggleShowCity(!showCity)}
                 >
-                  {city}
-                </li>
-              ))}
-            </ol>
-          )}
-        </div>
+                    {selectedCity || "Select City"}
+                </div>
+                {showCity && (
+                    <ul className="dropdown-list">
+                        {cities.map((c) => (
+                            <li key={c} onClick={() => {setSelectedCity(c); toggleShowCity(false);}}>
+                                {c}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
 
-        <button type="submit">
-          <IoSearchSharp />
-          Search
-        </button>
-      </form>
-
-      {medicalCenters.length !== 0 ? (
-        <div>
-          <h1>
-            {medicalCenters.length} medical centers available in{" "}
-            {selectedCity.toLowerCase()}
-          </h1>
-          <p>
-            <CiCircleCheck /> Book appointments with minimum wait-time &
-            verified doctor details
-          </p>
-        </div>
-      ) : (
-        <div></div>
-      )}
-    </div>
-  );
+            <button type="submit" id="searchBtn">
+                <IoSearchSharp />Search
+            </button>
+        </form>
+    );
 };
 
 export default StateCitySearch;
